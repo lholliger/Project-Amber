@@ -1,0 +1,100 @@
+<head>
+  <style>
+  body {
+    padding: 0;
+    margin: 0;
+  }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <title>Project Amber</title>
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="mobile-web-app-capable" content="yes">
+  	<meta name="apple-mobile-web-app-title" content="Amber">
+  	<meta name="apple-mobile-web-app-capable" content="yes">
+</head>
+<body>
+  <canvas id='wea'></canvas>
+</body>
+<script>
+
+var width, height, blocksx, blocksy, canvas, c, weamap;
+
+function setUp() {
+    c = document.getElementById('wea'),
+    canvas = c.getContext('2d');
+    c.width = window.innerWidth;
+    c.height = window.innerHeight;
+    canvas.beginPath();
+    canvas.rect(0, 0, window.innerWidth, window.innerHeight);
+    canvas.fillStyle = "black";
+    canvas.fill();
+
+    width = window.innerWidth;
+    height = window.innerHeight;
+
+
+    var centerX = c.width / 2;
+    var centerY = c.height / 2;
+    var radius = 70;
+    $.get("https://weather.com/weather/today/l/USGA0028:1:US", function(response) {
+      weamap = response;
+       console.log("done");
+
+       var winddir = between(weamap, '<th>Wind</th>' , "</span></td></tr><tr><th>Humidity</th>");
+       winddir = between(winddir, '<span class="">', " mph");
+       winddir = between(winddir, '>' ," "); // final
+
+
+       var windspeed = between(weamap, '<th>Wind</th>' , "</span></td></tr><tr><th>Humidity</th>");
+       windspeed = between(windspeed, '<span class="">', "mph");
+       windspeed = between(windspeed, '>' ," ");
+       windspeed = windspeed.substring(windspeed.indexOf(" ") + 1); // final
+
+
+       x1 = centerX;
+       y1 = centerY;
+       r =  200;
+       console.log(winddir);
+
+       if (winddir == "WSW") {
+         tox = centerX - 300;
+         toy = centerY + 45;
+       }
+
+       if (winddir == "N") {
+         tox = centerX - 0;
+         toy = centerY - 300;
+       }
+       if (winddir == "S") {
+         tox = centerX - 0;
+         toy = centerY + 300;
+       }
+       if (winddir == "E") {
+         tox = centerX + 300;
+         toy = centerY - 0;
+       }
+       if (winddir == "W") {
+         tox = centerX - 300;
+         toy = centerY - 0;
+       }
+       canvas.moveTo(x1, y1);
+       canvas.lineTo(tox, toy);
+       canvas.stroke();
+     });
+
+     canvas.beginPath();
+     canvas.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+     canvas.fillStyle = 'black';
+     canvas.fill();
+     canvas.lineWidth = 5;
+     canvas.strokeStyle = 'white';
+     canvas.stroke();
+
+  }
+  function between(str, p1, p2) {
+  return str.substring(str.lastIndexOf(p1)+1,str.lastIndexOf(p2));
+  }
+  setUp();
+</script>
