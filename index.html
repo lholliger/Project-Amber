@@ -132,7 +132,7 @@ function degreesToRadians(degrees) {
 function computeDew()
 {
 
-    tem2 =  (weamap.main.temp );
+    tem2 =  weamap.main.temp;
     r = weamap.main.humidity;
     tem = -1.0*tem2;
     es = 6.112*Math.exp(-1.0*17.67*tem/(243.5 - tem));
