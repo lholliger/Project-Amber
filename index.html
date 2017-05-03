@@ -38,49 +38,47 @@ function setUp() {
     var centerX = c.width / 2;
     var centerY = c.height / 2;
     var radius = 70;
-    $.get("http://api.openweathermap.org/data/2.5/weather?q=Atlanta&APPID=9d740355d43667c66183ddfa9d2b5189", function(response) {
+    $.get("http://api.openweathermap.org/data/2.5/weather?q=Atlanta&APPID=9d740355d43667c66183ddfa9d2b5189&&units=imperial", function(response) {
       weamap = response;
       console.log(weamap);
        console.log("done");
 
        var winddir = weamap.wind.deg;
        var windspeed = weamap.wind.speed;
-       
+       var temp = weamap.main.temp;
+       var pressure = weamap.main.pressure;
+       var cc = weamap.clouds.all;
+       var city = weamap.name;
 
        x1 = centerX;
        y1 = centerY;
        r =  200;
-       console.log(windspeed);
-       console.log(winddir);
+       console.log("speed: " + windspeed);
+       console.log("direction: " +winddir);
+       console.log("city: " + city);
+       console.log("pressure: " + pressure);
+       console.log("temperature: " + temp);
+       console.log("clouds: " + cc);
 
-       if (winddir == "WSW") {
-         tox = centerX - 300;
-         toy = centerY + 45;
-       }
-
-       if (winddir == "N") {
-         tox = centerX - 0;
-         toy = centerY - 300;
-         y1 = y1 - 70;
-       }
-       if (winddir == "S") {
-         tox = centerX - 0;
-         toy = centerY + 300;
-         y1 = y1 + 70;
-       }
-       if (winddir == "E") {
-         tox = centerX + 300;
-         toy = centerY - 0;
-         x1 = x1 + 70;
-       }
-       if (winddir == "W") {
-         tox = centerX - 300;
-         toy = centerY - 0;
-         x1 = x1 - 70;
-       }
+/*
        canvas.moveTo(x1, y1);
        canvas.lineTo(tox, toy);
        canvas.stroke();
+*/
+
+      draw(c, winddir);
+
+      canvas.font = "50px Roboto";
+      canvas.fillStyle = "white";
+      canvas.fillText(pressure ,centerX+80,centerY-80);
+      canvas.fillText(temp,centerX-150,centerY-80);
+
+
+
+            canvas.font = "20px Roboto";
+            canvas.fillStyle = "gray";
+            canvas.fillText(city ,20,40);
+
      });
 
      canvas.beginPath();
@@ -95,5 +93,36 @@ function setUp() {
   function between(str, p1, p2) {
   return str.substring(str.lastIndexOf(p1)+1,str.lastIndexOf(p2));
   }
+
+
+
+  function draw(canvas, angle){
+      var context = canvas.getContext('2d'), centerX = Math.floor(canvas.width / 2), centerY = Math.floor(canvas.height / 2),radius = 300;
+      context.lineWidth = 5;
+      context.strokeStyle = 'white';
+      var begin = 0; interval = 360;
+      var arcSize= degreesToRadians(interval);
+      context.beginPath();
+      context.moveTo(centerX,centerY);
+      context.arc(centerX,centerY,radius, degreesToRadians(0), degreesToRadians((-1) * angle),false);
+      context.closePath();
+      context.stroke();
+      context.strokeStyle = 'black';
+      context.lineWidth = 6;
+      for(var startingAngle=begin; startingAngle < 360;){
+          context.beginPath();
+          context.moveTo(centerX, centerY);
+          context.arc(centerX, centerY, radius, degreesToRadians(startingAngle), startingAngle + arcSize, false);
+          context.closePath();
+          context.stroke();
+          startingAngle = startingAngle + interval;
+      }
+  }
+
+function degreesToRadians(degrees) {
+    return (degrees * Math.PI)/180;
+}
+
+
   setUp();
 </script>
