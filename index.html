@@ -38,24 +38,19 @@ function setUp() {
     var centerX = c.width / 2;
     var centerY = c.height / 2;
     var radius = 70;
-    $.get("https://weather.com/weather/today/l/USGA0028:1:US", function(response) {
+    $.get("http://api.openweathermap.org/data/2.5/weather?q=Atlanta&APPID=9d740355d43667c66183ddfa9d2b5189", function(response) {
       weamap = response;
+      console.log(weamap);
        console.log("done");
 
-       var winddir = between(weamap, '<th>Wind</th>' , "</span></td></tr><tr><th>Humidity</th>");
-       winddir = between(winddir, '<span class="">', " mph");
-       winddir = between(winddir, '>' ," "); // final
-
-
-       var windspeed = between(weamap, '<th>Wind</th>' , "</span></td></tr><tr><th>Humidity</th>");
-       windspeed = between(windspeed, '<span class="">', "mph");
-       windspeed = between(windspeed, '>' ," ");
-       windspeed = windspeed.substring(windspeed.indexOf(" ") + 1); // final
-
+       var winddir = weamap.wind.deg;
+       var windspeed = weamap.wind.speed;
+       
 
        x1 = centerX;
        y1 = centerY;
        r =  200;
+       console.log(windspeed);
        console.log(winddir);
 
        if (winddir == "WSW") {
@@ -66,18 +61,22 @@ function setUp() {
        if (winddir == "N") {
          tox = centerX - 0;
          toy = centerY - 300;
+         y1 = y1 - 70;
        }
        if (winddir == "S") {
          tox = centerX - 0;
          toy = centerY + 300;
+         y1 = y1 + 70;
        }
        if (winddir == "E") {
          tox = centerX + 300;
          toy = centerY - 0;
+         x1 = x1 + 70;
        }
        if (winddir == "W") {
          tox = centerX - 300;
          toy = centerY - 0;
+         x1 = x1 - 70;
        }
        canvas.moveTo(x1, y1);
        canvas.lineTo(tox, toy);
