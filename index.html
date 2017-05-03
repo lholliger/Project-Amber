@@ -33,12 +33,15 @@ function setUp() {
 
     width = window.innerWidth;
     height = window.innerHeight;
+    radius = 70;
+    if (canvas.width < 500 || canvas.height < 500) {
+      radius = 50;
 
-
+    }
     var centerX = c.width / 2;
     var centerY = c.height / 2;
-    var radius = 70;
-    $.get("//api.openweathermap.org/data/2.5/weather?q=Atlanta&APPID=9d740355d43667c66183ddfa9d2b5189&&units=imperial", function(response) {
+
+    $.get("http://api.openweathermap.org/data/2.5/weather?q=Atlanta&APPID=9d740355d43667c66183ddfa9d2b5189&&units=imperial", function(response) {
       weamap = response;
       console.log(weamap);
        console.log("done");
@@ -59,7 +62,7 @@ function setUp() {
        console.log("pressure: " + pressure);
        console.log("temperature: " + temp);
        console.log("clouds: " + cc);
-
+       console.log("humidity: " + weamap.main.humidity);
 /*
        canvas.moveTo(x1, y1);
        canvas.lineTo(tox, toy);
@@ -72,6 +75,7 @@ function setUp() {
       canvas.fillStyle = "white";
       canvas.fillText(pressure ,centerX+80,centerY-80);
       canvas.fillText(temp,centerX-150,centerY-80);
+      canvas.fillText(Math.round(computeDew()), centerX - 150, centerY + 80);
 
 
 
@@ -108,7 +112,7 @@ function setUp() {
       context.closePath();
       context.stroke();
       context.strokeStyle = 'black';
-      context.lineWidth = 6;
+      context.lineWidth = 8;
       for(var startingAngle=begin; startingAngle < 360;){
           context.beginPath();
           context.moveTo(centerX, centerY);
@@ -123,6 +127,18 @@ function degreesToRadians(degrees) {
     return (degrees * Math.PI)/180;
 }
 
+function computeDew()
+{
+
+    tem2 =  (weamap.main.temp );
+    r = weamap.main.humidity;
+    tem = -1.0*tem2;
+    es = 6.112*Math.exp(-1.0*17.67*tem/(243.5 - tem));
+    ed = r/100.0*es;
+    eln = Math.log(ed/6.112);
+    td = -243.5*eln/(eln - 17.67 );
+    return td;
+}
 
   setUp();
 </script>
