@@ -43,8 +43,8 @@ function setUp() {
 
     var radius = 70;
 
-    $.get("http://api.openweathermap.org/data/2.5/weather?q=Atlanta&APPID=9d740355d43667c66183ddfa9d2b5189&&units=imperial", function(response) {
-      weamap = response;
+    $.get("https://dsstore.captainwebservices.com/owa.php", function(response) {
+      weamap = JSON.parse(response);
       console.log(weamap);
        console.log("done");
 
