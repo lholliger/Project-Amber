@@ -4,6 +4,19 @@
     padding: 0;
     margin: 0;
   }
+  input {
+width: 100%;
+height: 100%;
+color: white;
+background-color: darkgray;
+border: 0;
+padding: 5px;
+  }
+  #sel {
+    width: 100%;
+    height: 30px;
+    background-color: black;
+  }
   </style>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
  <script src='amber.js'></script>
@@ -15,8 +28,32 @@
   	<meta name="apple-mobile-web-app-capable" content="yes">
 </head>
 <body>
+  <div id='sel'>
+<input id='city' placeholder="Enter the city you are looking for"></input>
+  </div>
   <canvas id='wea'></canvas>
 </body>
 <script>
-  setUp();
+document.getElementById("sel").style.display = "none";
+
+  setUp("Atlanta");
+
+  document.addEventListener("keyup", function(event) {
+      event.preventDefault();
+      if (event.keyCode == 67) {
+        weamap = null;
+          document.getElementById("sel").style.display = "block";
+      }
+  });
+
+  document.getElementById("city")
+      .addEventListener("keyup", function(event) {
+      event.preventDefault();
+      if (event.keyCode == 13) {
+        weamap = null;
+          setUp(document.getElementById("city").value);
+          document.getElementById("sel").style.display = "none";
+      }
+  });
+
 </script>

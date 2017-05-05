@@ -1,7 +1,7 @@
 
 var width, height, blocksx, blocksy, canvas, c, weamap, cache,centerX,centerY,radius;
 
-function setUp() {
+function setUp(citybase) {
     c = document.getElementById('wea'),
     canvas = c.getContext('2d');
     c.width = window.innerWidth;
@@ -35,7 +35,7 @@ function setUp() {
     canvas.textAlign = "center";
     canvas.fillText("Loading...",centerX, centerY);
     if (weamap == null) {
-      $.get("https://dsstore.captainwebservices.com/owa.php", function(response) {
+      $.get("https://dsstore.captainwebservices.com/owa.php?city=" + citybase, function(response) {
         cache = response;
         write(response);
        });
@@ -96,13 +96,14 @@ function computeDew()
 
 function write(weamap2) {
   canvas.textAlign = "left";
+    console.log(weamap);
   weamap = JSON.parse(weamap2);
-  console.log(weamap);
+
    console.log("done");
 
    var winddir = weamap.wind.deg;
    var windspeed = weamap.wind.speed;
-   var temp = weamap.main.temp;
+   var temp = Math.round(weamap.main.temp);
    var pressure = weamap.main.pressure;
    var cc = weamap.clouds.all;
    var city = weamap.name;
