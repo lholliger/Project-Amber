@@ -107,10 +107,11 @@ function write(weamap2) {
    var pressure = weamap.main.pressure;
    var cc = weamap.clouds.all;
    var city = weamap.name;
-
+   var loc = weamap.coord.lat + ", " + weamap.coord.lon;
    x1 = centerX;
    y1 = centerY;
    r =  200;
+   console.log("location: " + loc);
    console.log("speed: " + windspeed);
    console.log("direction: " +winddir);
    console.log("city: " + city);
@@ -123,7 +124,6 @@ function write(weamap2) {
    canvas.lineTo(tox, toy);
    canvas.stroke();
 */
-
 canvas.beginPath();
 canvas.rect(0, 0, window.innerWidth, window.innerHeight);
 canvas.fillStyle = "black";
@@ -137,7 +137,9 @@ canvas.fill();
   canvas.fillStyle = "white";
   canvas.fillText(pressure ,centerX+80,centerY-80);
   canvas.fillText(temp,centerX-150,centerY-80);
-  canvas.fillText(Math.round(computeDew()), centerX - 150, centerY + 80);
+  var dp = Math.round(computeDew());
+  canvas.fillText(dp, centerX - 150, centerY + 80);
+  document.getElementById("inf").innerHTML = "<center><table><tr><td><b>City</b></td><td><b>Coordinates</b></td><td><b>Wind Speed</b></td><td><b>Wind Direction</b></td><td><b>Pressure</b></td><td><b>Dew Point</b></td><td><b>Location Link</b></td></tr>" + "<tr><td>" + city + "</td><td>" + loc + "</td><td>" + windspeed + "</td><td>" + winddir + "</td><td>" + pressure + "</td><td>" + dp + "</td><td>https://datonelefty.github.io/Project-Amber/?city=" + city + "</td></tr></table></center>"
 
 
 
@@ -210,3 +212,8 @@ swipedetect (document.getElementById("wea"), function (directionof) {
 document.getElementById("sel").style.display = "block";
 }
 });
+
+function get(name){
+   if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
+      return decodeURIComponent(name[1]);
+}

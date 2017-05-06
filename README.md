@@ -1,2 +1,2 @@
 # Project-Amber
-draws weather info on screen from Weather Underground
+draws weather info on screen from Open Weather Map

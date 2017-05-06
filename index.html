@@ -1,5 +1,8 @@
 <head>
   <style>
+  * {
+    font-family: 'Roboto', sans-serif;
+  }
   body {
     padding: 0;
     margin: 0;
@@ -17,6 +20,16 @@ padding: 5px;
     height: 30px;
     background-color: black;
   }
+
+  #inf {
+    width: 100%;
+
+    background-color: darkgray;
+  }
+  td {
+    text-align: center;
+    padding-left: 10px;
+  }
   </style>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
  <script src='amber.js'></script>
@@ -31,20 +44,40 @@ padding: 5px;
   <div id='sel'>
 <input id='city' placeholder="Enter the city you are looking for"></input>
   </div>
+
+  <div id='inf'>
+  </div>
   <canvas id='wea'></canvas>
 </body>
 <script>
 document.getElementById("sel").style.display = "none";
+document.getElementById("inf").style.display = "none";
 
+  if (get("city") != "") {
+    setUp(get("city"));
+  } else {
   setUp("Atlanta");
+}
 
   document.addEventListener("keyup", function(event) {
       event.preventDefault();
       if (event.keyCode == 67) {
         weamap = null;
+        document.getElementById("inf").style.display = "none";
+
           document.getElementById("sel").style.display = "block";
       }
   });
+
+  document.addEventListener("keyup", function(event) {
+      event.preventDefault();
+      if (event.keyCode == 73) {
+                document.getElementById("sel").style.display = "none";
+
+          document.getElementById("inf").style.display = "block";
+      }
+  });
+
 
   document.getElementById("city")
       .addEventListener("keyup", function(event) {
