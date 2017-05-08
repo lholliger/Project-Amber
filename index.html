@@ -53,10 +53,10 @@ padding: 5px;
 document.getElementById("sel").style.display = "none";
 document.getElementById("inf").style.display = "none";
 
-  if (get("city") != "") {
+  if (get("city") != null) {
     setUp(get("city"));
   } else {
-  setUp("Atlanta");
+    setUp("Atlanta");
 }
 
   document.addEventListener("keyup", function(event) {
