@@ -59,6 +59,13 @@ document.getElementById("inf").style.display = "none";
     setUp("Atlanta");
 }
 
+  
+  if (get("show") == "info") {
+    Document.getElementById("inf").style.display = "block";
+    }
+  if (get("show") == "select") {
+      Document.getElementById("sel").style.display = "block";
+  
   document.addEventListener("keyup", function(event) {
       event.preventDefault();
       if (event.keyCode == 67) {
