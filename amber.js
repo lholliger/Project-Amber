@@ -1,7 +1,8 @@
 
-var width, height, blocksx, blocksy, canvas, c, weamap, cache,centerX,centerY,radius;
+var width, height, blocksx, blocksy, canvas, c, weamap, cache,centerX,centerY,radius, ccity;
 
 function setUp(citybase) {
+  ccity = citybase;
     c = document.getElementById('wea'),
     canvas = c.getContext('2d');
     c.width = window.innerWidth;
@@ -112,6 +113,9 @@ function write(weamap2) {
    y1 = centerY;
    r =  200;
    console.log("location: " + loc);
+   if (city.toLowerCase() != ccity.toLowerCase()) {
+     bderror("the city you chose wasn't in thw database. So one of the closesest ones were chosen instead");
+   }
    console.log("speed: " + windspeed);
    console.log("direction: " +winddir);
    console.log("city: " + city);
@@ -216,4 +220,9 @@ document.getElementById("sel").style.display = "block";
 function get(name){
    if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
       return decodeURIComponent(name[1]);
+}
+
+function bderror(error) {
+  document.getElementById("iid").innerHTML = error;
+  document.getElementById("err").style.display = "block";
 }
