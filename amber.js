@@ -226,3 +226,4 @@ function bderror(error) {
   document.getElementById("iid").innerHTML = error;
   document.getElementById("err").style.display = "block";
 }
+$(window).on("resize", setUp(ccity);
