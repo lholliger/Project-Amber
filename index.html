@@ -10,7 +10,7 @@
   	<meta name="apple-mobile-web-app-title" content="Amber">
   	<meta name="apple-mobile-web-app-capable" content="yes">
 </head>
-<body>
+<body onresize="setUp(ccity)">
   <div id='sel'>
 <input id='city' placeholder="Enter the city you are looking for"></input>
   </div>
@@ -70,7 +70,7 @@ console.log(get("show"));
   document.getElementById("city")
       .addEventListener("keyup", function(event) {
       event.preventDefault();
-      
+
       if (event.keyCode == 13) {
         weamap = null;
           setUp(document.getElementById("city").value);
