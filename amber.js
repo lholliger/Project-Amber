@@ -39,15 +39,13 @@ function setUp(citybase) {
       $.get("https://dsstore.captainwebservices.com/owa.php?city=" + citybase, function(response) {
         cache = response;
         write(response);
+
        });
 
     } else {
       write(cache);
+
     }
-
-
-
-
   }
   function between(str, p1, p2) {
   return str.substring(str.lastIndexOf(p1)+1,str.lastIndexOf(p2));
@@ -160,6 +158,7 @@ canvas.fill();
         canvas.stroke();
 
 
+        computeClouds(weamap.clouds.all);
 
 }
 
