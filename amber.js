@@ -36,7 +36,7 @@ function setUp(citybase) {
     canvas.textAlign = "center";
     canvas.fillText("Loading...",centerX, centerY);
     if (weamap == null) {
-      $.get("https://dsstore.captainwebservices.com/owa.php?city=" + citybase, function(response) {
+      $.get("https://projects.lefty.cf/amber/amber.php?city=" + citybase, function(response) {
         cache = response;
         write(response);
 
